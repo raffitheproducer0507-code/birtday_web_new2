@@ -3,152 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Surprise</title>
-    <!-- Tailwind CSS -->
+    <title>Birthday Surprise For You</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <!-- Canvas Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        body {
-            background: linear-gradient(135deg, #4c1d95, #1e1b4b); /* Deep Purple to Midnight Blue */
-            overflow-x: hidden;
-        }
-        .glassmorphism {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .star {
-            position: absolute;
-            color: white;
-            font-size: 1rem;
-            animation: float 3s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        .scene {
-            display: none;
-            min-height: 100vh;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        .scene.active {
-            display: flex;
-        }
+        body { background: linear-gradient(135deg, #1e1b4b, #4c1d95); overflow-x: hidden; margin: 0; }
+        .glassmorphism { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .scene { display: none; min-height: 100vh; width: 100%; padding: 20px; }
+        .scene.active { display: flex; flex-direction: column; justify-content: center; align-items: center; }
     </style>
 </head>
-<body class="text-white font-sans relative">
-    <!-- Floating Stars -->
-    <div class="star" style="top: 10%; left: 20%;">✨</div>
-    <div class="star" style="top: 20%; right: 15%;">⭐</div>
-    <div class="star" style="top: 40%; left: 10%;">✨</div>
-    <div class="star" style="top: 60%; right: 20%;">⭐</div>
-    <div class="star" style="top: 80%; left: 30%;">✨</div>
+<body class="text-white font-sans">
 
-    <!-- Scene 1: The Hook -->
     <div id="scene1" class="scene active">
-        <div class="text-center glassmorphism p-8 rounded-lg max-w-md mx-4">
-            <h1 class="text-3xl mb-4">Hi, my special person...</h1>
-            <button id="startBtn" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-full transition">Start Our Story</button>
+        <div class="text-center glassmorphism p-10 rounded-3xl max-w-md shadow-2xl">
+            <h1 class="text-3xl font-bold mb-6">Hi, my special person... ✨</h1>
+            <button id="startBtn" class="bg-white text-purple-900 font-bold px-8 py-3 rounded-full hover:scale-105 transition-transform shadow-lg">Lanjut</button>
         </div>
     </div>
 
-    <!-- Scene 2: The Transition -->
     <div id="scene2" class="scene">
-        <div class="text-center glassmorphism p-8 rounded-lg max-w-md mx-4">
-            <img src="https://via.placeholder.com/300x200?text=Beautiful+Photo" alt="Beautiful Photo" class="rounded-lg mb-4">
-            <p class="text-xl mb-4">Today is all about you.</p>
-            <button id="nextBtn2" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-full transition">Next</button>
+        <div class="text-center glassmorphism p-8 rounded-3xl max-w-md shadow-2xl">
+            <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?w=500" alt="Momen Kita" class="rounded-2xl mb-6 shadow-lg border-2 border-white/20">
+            <p class="text-2xl font-medium mb-6">Today is all about you. ❤️</p>
+            <button onclick="goToScene(3)" class="bg-purple-500 text-white px-8 py-2 rounded-full font-semibold">Lanjut Lagi</button>
         </div>
     </div>
 
-    <!-- Scene 3: The Moments (Memory Lane) -->
     <div id="scene3" class="scene">
-        <div class="text-center glassmorphism p-8 rounded-lg max-w-md mx-4">
-            <h2 class="text-2xl mb-4">Memory Lane</h2>
-            <div id="memory1" class="memory hidden">
-                <img src="https://via.placeholder.com/200x150?text=Memory+1" alt="Memory 1" class="rounded-lg mb-2">
-                <p class="text-sm">That time we laughed until we cried.</p>
+        <div class="text-center glassmorphism p-8 rounded-3xl max-w-md shadow-2xl">
+            <h2 class="text-3xl font-bold mb-6">Our Moments</h2>
+            <div class="space-y-4 mb-6 text-lg italic">
+                "Setiap detik sama kamu itu hadiah paling indah..."
             </div>
-            <div id="memory2" class="memory hidden">
-                <img src="https://via.placeholder.com/200x150?text=Memory+2" alt="Memory 2" class="rounded-lg mb-2">
-                <p class="text-sm">Our first adventure together.</p>
-            </div>
-            <div id="memory3" class="memory hidden">
-                <img src="https://via.placeholder.com/200x150?text=Memory+3" alt="Memory 3" class="rounded-lg mb-2">
-                <p class="text-sm">The day we made unforgettable memories.</p>
-            </div>
-            <button id="nextBtn3" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-full transition mt-4">Next</button>
+            <button onclick="goToScene(4)" class="bg-purple-500 text-white px-8 py-2 rounded-full font-semibold">Lihat Kejutan Terakhir</button>
         </div>
     </div>
 
-    <!-- Scene 4: The Grand Finale -->
     <div id="scene4" class="scene">
-        <div class="text-center glassmorphism p-8 rounded-lg max-w-lg mx-4">
-            <h1 class="text-4xl mb-4">HAPPY BIRTHDAY [NAME]!</h1>
-            <p class="text-lg mb-4">
-                Dear [NAME], on this special day, I want to celebrate you and all the joy you bring into my life. From the moment we met, you've been my sunshine, my laughter, and my greatest adventure. May this year bring you endless happiness, love, and success. You deserve it all and more. Here's to many more memories together. Love you endlessly!
+        <div class="text-center glassmorphism p-8 rounded-3xl max-w-lg shadow-2xl mx-4">
+            <h1 class="text-4xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-yellow-200">HAPPY BIRTHDAY! 🎂</h1>
+            <p class="text-md leading-relaxed mb-6">
+                Di hari spesial ini, aku cuma mau bilang makasih udah ada. Kamu bukan cuma spesial, kamu adalah bagian favorit dari setiap cerita yang aku punya. Stay amazing! 💖
             </p>
-            <!-- Spotify Embed Placeholder -->
-            <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M" width="300" height="380" frameborder="0" allowtransparency="true" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            
+            <div class="rounded-2xl overflow-hidden shadow-lg border border-white/10">
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3InS9L8I3Y9O3hNid8D3U7?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
         </div>
     </div>
 
     <script>
-        // State management
-        let currentScene = 1;
-        let memoryIndex = 0;
-        const memories = ['memory1', 'memory2', 'memory3'];
-
-        // Function to fade out current scene and fade in next
-        function transitionToScene(nextSceneId) {
-            const current = document.getElementById(`scene${currentScene}`);
-            const next = document.getElementById(nextSceneId);
-            gsap.to(current, { opacity: 0, duration: 0.5, onComplete: () => {
+        function goToScene(sceneNumber) {
+            const current = document.querySelector('.scene.active');
+            const next = document.getElementById('scene' + sceneNumber);
+            
+            gsap.to(current, { opacity: 0, y: -20, duration: 0.5, onComplete: () => {
                 current.classList.remove('active');
                 next.classList.add('active');
-                gsap.fromTo(next, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.5 });
+                gsap.fromTo(next, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7 });
+                
+                if(sceneNumber === 4) { triggerConfetti(); }
             }});
-            currentScene = parseInt(nextSceneId.replace('scene', ''));
         }
 
-        // Start button
-        document.getElementById('startBtn').addEventListener('click', () => {
-            transitionToScene('scene2');
-        });
+        document.getElementById('startBtn').addEventListener('click', () => goToScene(2));
 
-        // Next button for Scene 2
-        document.getElementById('nextBtn2').addEventListener('click', () => {
-            transitionToScene('scene3');
-            // Show first memory
-            document.getElementById(memories[0]).classList.remove('hidden');
-            gsap.fromTo(`#${memories[0]}`, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 });
-            memoryIndex = 1;
-        });
-
-        // Next button for Scene 3 (Memory Lane)
-        document.getElementById('nextBtn3').addEventListener('click', () => {
-            if (memoryIndex < memories.length) {
-                // Show next memory
-                document.getElementById(memories[memoryIndex]).classList.remove('hidden');
-                gsap.fromTo(`#${memories[memoryIndex]}`, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 });
-                memoryIndex++;
-            } else {
-                // All memories shown, go to Scene 4
-                transitionToScene('scene4');
-                // Trigger confetti
-                confetti({
-                    particleCount: 100,
-                    spread: 70,
-                    origin: { y: 0.6 }
-                });
-            }
-        });
+        function triggerConfetti() {
+            var end = Date.now() + (5 * 1000);
+            (function frame() {
+                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
+                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
+                if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+        }
     </script>
 </body>
 </html>
