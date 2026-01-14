@@ -3,115 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Surprise For You</title>
+    <title>Special Birthday for You</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        body { 
-            background: linear-gradient(135deg, #1e1b4b 0%, #4c1d95 50%, #1e1b4b 100%); 
-            overflow: hidden; 
-            margin: 0; 
+        /* Animasi Latar Belakang Bergerak */
+        body {
+            margin: 0;
+            background: linear-gradient(-45deg, #1e1b4b, #4c1d95, #701a75, #1e1b4b);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
             height: 100vh;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
         }
-        .glassmorphism { 
-            background: rgba(255, 255, 255, 0.05); 
-            backdrop-filter: blur(15px); 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-        .scene { display: none; min-height: 100vh; width: 100%; padding: 20px; z-index: 10; position: relative; }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .scene { display: none; height: 100vh; width: 100%; position: relative; z-index: 10; }
         .scene.active { display: flex; flex-direction: column; justify-content: center; align-items: center; }
         
-        /* Background Heart Animation */
-        .heart {
+        /* Floating Stars */
+        .decoration {
             position: absolute;
-            color: rgba(255, 105, 180, 0.3);
-            user-select: none;
             pointer-events: none;
-            z-index: 1;
+            opacity: 0.5;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
     </style>
 </head>
-<body class="text-white font-sans">
+<body class="text-white">
 
-    <div id="heart-container" class="absolute inset-0 overflow-hidden"></div>
+    <div class="decoration" style="top: 10%; left: 10%; font-size: 2rem;">✨</div>
+    <div class="decoration" style="top: 70%; left: 80%; font-size: 1.5rem;">🌸</div>
+    <div class="decoration" style="top: 30%; right: 10%; font-size: 2.5rem;">⭐</div>
 
     <div id="scene1" class="scene active">
-        <div class="text-center glassmorphism p-10 rounded-3xl max-w-md animate-pulse">
-            <h1 class="text-3xl font-bold mb-6">Hi, my special person... ✨</h1>
-            <button id="startBtn" class="bg-white text-purple-900 font-bold px-10 py-3 rounded-full hover:scale-110 transition-all shadow-xl">Buka Pesan</button>
+        <div class="glass p-10 text-center mx-4 max-w-sm">
+            <h1 class="text-3xl font-bold mb-4">Hi, my special person... ❤️</h1>
+            <p class="mb-6 opacity-80 text-sm">Ada sesuatu yang pengen aku kasih tahu kamu.</p>
+            <button onclick="nextScene(2)" class="bg-white text-purple-900 font-bold px-8 py-3 rounded-full shadow-lg hover:scale-110 transition-all">Buka Sekarang</button>
         </div>
     </div>
 
     <div id="scene2" class="scene">
-        <div class="text-center glassmorphism p-6 rounded-3xl max-w-md">
-            <div class="relative inline-block">
-                <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?w=500" alt="Momen Kita" class="rounded-2xl mb-6 shadow-2xl border-4 border-white/10">
-                <div class="absolute -top-4 -right-4 text-4xl">⭐</div>
-            </div>
-            <p class="text-2xl font-serif italic mb-6">Today is all about you. ❤️</p>
-            <button onclick="goToScene(3)" class="bg-pink-500 text-white px-8 py-2 rounded-full font-semibold hover:bg-pink-600 transition">Lanjut</button>
+        <div class="glass p-6 text-center mx-4 max-w-sm">
+            <img src="https://images.unsplash.com/photo-1530103862676-fa8c913d1d6d?w=500" class="rounded-xl mb-4 border-2 border-white/20 shadow-lg">
+            <p class="text-xl font-medium mb-6 italic">"Every day with you is a blessing."</p>
+            <button onclick="nextScene(3)" class="bg-pink-500 hover:bg-pink-600 text-white px-8 py-2 rounded-full transition-all font-bold">Lanjut</button>
         </div>
     </div>
 
-    <div id="scene4" class="scene">
-        <div class="text-center glassmorphism p-8 rounded-3xl max-w-lg mx-4 border-t-2 border-pink-400/30">
-            <h1 class="text-4xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-white to-yellow-200">HAPPY BIRTHDAY! 🎂</h1>
-            <p class="text-lg leading-relaxed mb-8 italic">
-                "Di hari spesial ini, aku cuma mau bilang makasih udah ada. Kamu bukan cuma spesial, kamu adalah alasan kenapa aku percaya kalau kebahagiaan itu sederhana." 💖
+    <div id="scene3" class="scene">
+        <div class="glass p-8 text-center mx-4 max-w-lg">
+            <h1 class="text-4xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-yellow-200 uppercase">Happy Birthday! 🎂</h1>
+            <p class="text-md leading-relaxed mb-6 opacity-90">
+                Semoga di usia ini kamu makin bahagia, makin bersinar, dan selalu jadi orang hebat yang aku kenal. Aku selalu bangga punya kamu. Enjoy your day! 💖
             </p>
             
-            <div class="rounded-2xl overflow-hidden shadow-2xl bg-black/40">
-                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/30YI8R8O03y78E073xY98n?utm_source=generator" width="100%" height="152" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <div class="rounded-xl overflow-hidden shadow-2xl bg-black/20">
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/30YI8R8O03y78E073xY98n?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
+            
+            <p class="mt-4 text-[10px] opacity-40 italic">Scroll atau klik Play untuk dengar lagu kita</p>
         </div>
     </div>
 
     <script>
-        // Efek Hati Terbang
-        function createHeart() {
-            const container = document.getElementById('heart-container');
-            const heart = document.createElement('div');
-            heart.innerHTML = '❤️';
-            heart.classList.add('heart');
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
-            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            container.appendChild(heart);
-
-            gsap.fromTo(heart, 
-                { y: '110vh', opacity: 0 }, 
-                { y: '-10vh', opacity: 1, duration: Math.random() * 5 + 5, onComplete: () => heart.remove() }
-            );
-        }
-        setInterval(createHeart, 400);
-
-        // Transisi Halaman
-        function goToScene(sceneNumber) {
+        function nextScene(num) {
             const current = document.querySelector('.scene.active');
-            const next = document.getElementById('scene' + sceneNumber);
-            
-            gsap.to(current, { opacity: 0, scale: 0.9, duration: 0.5, onComplete: () => {
+            const next = document.getElementById('scene' + num);
+
+            gsap.to(current, { opacity: 0, y: -50, duration: 0.5, onComplete: () => {
                 current.classList.remove('active');
                 next.classList.add('active');
-                gsap.fromTo(next, { opacity: 0, scale: 1.1 }, { opacity: 1, scale: 1, duration: 0.8 });
-                if(sceneNumber === 4) triggerConfetti();
+                gsap.fromTo(next, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.7 });
+                
+                if(num === 3) {
+                    // Petasan Konfeti
+                    var end = Date.now() + (5 * 1000);
+                    (function frame() {
+                        confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
+                        confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
+                        if (Date.now() < end) requestAnimationFrame(frame);
+                    }());
+                }
             }});
-        }
-
-        document.getElementById('startBtn').addEventListener('click', () => goToScene(2));
-
-        function triggerConfetti() {
-            const duration = 15 * 1000, animationEnd = Date.now() + duration, defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-            function randomInRange(min, max) { return Math.random() * (max - min) + min; }
-            const interval = setInterval(function() {
-                const timeLeft = animationEnd - Date.now();
-                if (timeLeft <= 0) return clearInterval(interval);
-                const particleCount = 50 * (timeLeft / duration);
-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
-            }, 250);
         }
     </script>
 </body>
